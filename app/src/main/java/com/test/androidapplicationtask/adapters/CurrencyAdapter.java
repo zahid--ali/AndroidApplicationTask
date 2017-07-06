@@ -49,6 +49,6 @@ public class CurrencyAdapter extends BaseAdapter {
         final CurrencyModel c = currencyList.get(i);
         tvName.setText(c.getName());
         tvRate.setText(Double.toString(c.getRate()));
-        return null;
+        return currencyItemView;
     }
 }

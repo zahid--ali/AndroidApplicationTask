@@ -1,5 +1,6 @@
 package com.test.androidapplicationtask;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
@@ -15,12 +16,17 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements Callback<APIResponseModel> {
     ListView lvCurrency;
-
+ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lvCurrency = (ListView) findViewById(R.id.lv_Currency);
+        progressDialog= new ProgressDialog(MainActivity.this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
         getLatestCurrencyExchangeRates();
     }
 
@@ -31,12 +37,26 @@ public class MainActivity extends AppCompatActivity implements Callback<APIRespo
 
     @Override
     public void onResponse(Call<APIResponseModel> call, Response<APIResponseModel> response) {
+        progressDialog.dismiss();
         APIResponseModel responseModel = response.body();
         lvCurrency.setAdapter(new CurrencyAdapter(MainActivity.this, responseModel.getCurrencyList()));
+        new SweetAlertDialog(MainActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Base Currency: " + responseModel.getBase())
+                .setContentText("Last update date: " + responseModel.getDate())
+                .setConfirmText(getResources().getString(R.string.ok))
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+                    }
+                })
+                .show();
+
     }
 
     @Override
     public void onFailure(Call<APIResponseModel> call, Throwable t) {
+        progressDialog.dismiss();
         new SweetAlertDialog(MainActivity.this, SweetAlertDialog.ERROR_TYPE)
                 .setTitleText(getResources().getString(R.string.error_title_default))
                 .setContentText(getResources().getString(R.string.error_title_message))
