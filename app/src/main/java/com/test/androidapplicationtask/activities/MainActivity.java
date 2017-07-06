@@ -60,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements Callback<APIRespo
 
     private void submitResponseToFirebase(APIResponseModel responseModel) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("currencyrates").setValue(responseModel);
+        mDatabase.child("base").setValue(responseModel.getBase());
+        mDatabase.child("date").setValue(responseModel.getDate());
+        mDatabase.child("rates").setValue(responseModel.getCurrencyList());
     }
 
     @Override

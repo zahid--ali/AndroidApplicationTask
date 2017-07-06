@@ -10,7 +10,7 @@ import java.util.List;
 public class APIResponseModel {
     private String base;
     private String date;
-    private RatesEntity rates;
+    private RatesObject rates;
 
     public String getBase() {
         return base;
@@ -28,11 +28,11 @@ public class APIResponseModel {
         this.date = date;
     }
 
-    public RatesEntity getRates() {
+    public RatesObject getRates() {
         return rates;
     }
 
-    public void setRates(RatesEntity rates) {
+    public void setRates(RatesObject rates) {
         this.rates = rates;
     }
 
@@ -72,7 +72,7 @@ public class APIResponseModel {
         return currencyList;
     }
 
-    public static class RatesEntity {
+    public static class RatesObject {
         private double AUD;
         private double BGN;
         private double BRL;
