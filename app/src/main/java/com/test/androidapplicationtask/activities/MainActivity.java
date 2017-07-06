@@ -1,10 +1,13 @@
-package com.test.androidapplicationtask;
+package com.test.androidapplicationtask.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.test.androidapplicationtask.R;
 import com.test.androidapplicationtask.adapters.CurrencyAdapter;
 import com.test.androidapplicationtask.communication.Api;
 import com.test.androidapplicationtask.models.APIResponseModel;
@@ -16,13 +19,14 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements Callback<APIResponseModel> {
     ListView lvCurrency;
-ProgressDialog progressDialog;
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lvCurrency = (ListView) findViewById(R.id.lv_Currency);
-        progressDialog= new ProgressDialog(MainActivity.this);
+        progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait...");
@@ -51,7 +55,12 @@ ProgressDialog progressDialog;
                     }
                 })
                 .show();
+        submitResponseToFirebase(responseModel);
+    }
 
+    private void submitResponseToFirebase(APIResponseModel responseModel) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("currencyrates").setValue(responseModel);
     }
 
     @Override
