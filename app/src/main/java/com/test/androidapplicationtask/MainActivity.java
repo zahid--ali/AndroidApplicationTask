@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
+import com.test.androidapplicationtask.adapters.CurrencyAdapter;
 import com.test.androidapplicationtask.communication.Api;
 import com.test.androidapplicationtask.models.APIResponseModel;
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements Callback<APIRespo
     @Override
     public void onResponse(Call<APIResponseModel> call, Response<APIResponseModel> response) {
         APIResponseModel responseModel = response.body();
-
+        lvCurrency.setAdapter(new CurrencyAdapter(MainActivity.this, responseModel.getCurrencyList()));
     }
 
     @Override
