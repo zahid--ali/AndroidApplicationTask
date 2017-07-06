@@ -1,5 +1,6 @@
 package com.test.androidapplicationtask.communication;
 
+import com.test.androidapplicationtask.BuildConfig;
 import com.test.androidapplicationtask.models.APIResponseModel;
 
 import retrofit2.Call;
@@ -13,7 +14,7 @@ import retrofit2.http.GET;
 
 public interface Api {
     Api SERVICE= new Retrofit.Builder()
-            .baseUrl("http://api.fixer.io/")
+            .baseUrl(BuildConfig.END_POINT)
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(Api.class);
 

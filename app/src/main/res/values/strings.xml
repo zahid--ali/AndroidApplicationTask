@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Android Application Task</string>
+    <string name="error_title_default">Internal Error</string>
+    <string name="error_title_message">Something went wrong, please check your Internet Connection</string>
+    <string name="ok">OK</string>
+    <string name="retry">Retry</string>
 </resources>
